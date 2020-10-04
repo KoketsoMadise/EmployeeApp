@@ -39,8 +39,8 @@
                     
                     // Attempt select query execution
                     $sql = "SELECT * FROM employees";
-                    if($result = $mysqli->query($sql)){
-                        if($result->num_rows > 0){
+                    if($result = mysqli_query($link, $sql)){
+                        if(mysqli_num_rows($result) > 0){
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
@@ -52,7 +52,7 @@
                                     echo "</tr>";
                                 echo "</thead>";
                                 echo "<tbody>";
-                                while($row = $result->fetch_array()){
+                                while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
                                         echo "<td>" . $row['name'] . "</td>";
@@ -68,16 +68,16 @@
                                 echo "</tbody>";                            
                             echo "</table>";
                             // Free result set
-                            $result->free();
+                            mysqli_free_result($result);
                         } else{
                             echo "<p class='lead'><em>No records were found.</em></p>";
                         }
                     } else{
-                        echo "ERROR: Could not able to execute $sql. " . $mysqli->error;
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
                     }
-                    
+ 
                     // Close connection
-                    $mysqli->close();
+                    mysqli_close($link);
                     ?>
                 </div>
             </div>        
